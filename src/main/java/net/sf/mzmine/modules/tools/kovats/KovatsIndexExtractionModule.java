@@ -16,9 +16,10 @@
  * USA
  */
 
-package net.sf.mzmine.modules.peaklistmethods.filtering.blanksubtraction;
+package net.sf.mzmine.modules.tools.kovats;
 
 import java.util.Collection;
+import javax.annotation.Nonnull;
 import net.sf.mzmine.datamodel.MZmineProject;
 import net.sf.mzmine.modules.MZmineModuleCategory;
 import net.sf.mzmine.modules.MZmineRunnableModule;
@@ -26,43 +27,37 @@ import net.sf.mzmine.parameters.ParameterSet;
 import net.sf.mzmine.taskcontrol.Task;
 import net.sf.mzmine.util.ExitCode;
 
-/**
- * 
- * @author SteffenHeu steffen.heuckeroth@gmx.de / s_heuc03@uni-muenster.de
- *
- */
-public class PeakListBlankSubtractionModule implements MZmineRunnableModule {
+public class KovatsIndexExtractionModule implements MZmineRunnableModule {
 
-  public static final String MODULE_NAME = "Peak list blank subtraction";
+  private static final String MODULE_NAME = "Kovats index extraction";
+  private static final String MODULE_DESCRIPTION =
+      "Extract Kovats indexes from a raw data file and save to csv.";
+
   @Override
-  public String getName() {
+  public @Nonnull String getName() {
     return MODULE_NAME;
   }
 
   @Override
-  public Class<? extends ParameterSet> getParameterSetClass() {
-    return PeakListBlankSubtractionParameters.class;
+  public @Nonnull MZmineModuleCategory getModuleCategory() {
+    return MZmineModuleCategory.TOOLS;
   }
 
   @Override
-  public String getDescription() {
-    return "Subtracts a blank measurements peak list from another peak list.";
+  public @Nonnull Class<? extends ParameterSet> getParameterSetClass() {
+    return KovatsIndexExtractionParameters.class;
   }
 
   @Override
-  public ExitCode runModule(MZmineProject project, ParameterSet parameters,
-      Collection<Task> tasks) {
-    
-    Task task = new PeakListBlankSubtractionMasterTask(project,  (PeakListBlankSubtractionParameters) parameters);
-    
-    tasks.add(task);
-    
+  public @Nonnull String getDescription() {
+    return MODULE_DESCRIPTION;
+  }
+
+  @Override
+  public @Nonnull ExitCode runModule(@Nonnull MZmineProject project,
+      @Nonnull ParameterSet parameters, @Nonnull Collection<Task> tasks) {
+
     return ExitCode.OK;
-  }
-
-  @Override
-  public MZmineModuleCategory getModuleCategory() {
-    return MZmineModuleCategory.PEAKLISTFILTERING;
   }
 
 }
